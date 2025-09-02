@@ -23,7 +23,7 @@ export const Projects = () => {
       techStack: ["SKY130", "Xschem", "Ngspice", "Magic", "Netgen"],
       github: "https://github.com/Krishanu-007/cmos_inverter_sky130.git",
       category: "Analog & Mixed-Signal Design",
-      status: "In Progress"
+      status: "Completed"
     },
     {
       title: "Transistor Analysis using SKY130 PDK",
