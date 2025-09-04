@@ -163,7 +163,7 @@ export const Hero = () => {
               View My Work
             </motion.button>
             <motion.a
-              href="https://drive.google.com/file/d/1pasjgM5ZJTZbcWw64Vz-0qkx-2qFJiC7/view?usp=drive_link"
+              href="https://drive.google.com/file/d/1AZQRfGIEOEfQnuFc0G301Fs9pJlzrZRS/view?usp=drive_link"
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
