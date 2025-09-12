@@ -12,11 +12,18 @@ export const Projects = () => {
     "RTL Design",
     "Analog & Mixed-Signal Design",
     "RF & Microwave Design",
-    "Hardware Visualization",
     "Embedded & IoT Systems"
   ];
 
   const projects = [
+      {
+      title: "Design and Analysis of 3 stage Ring Oscillator",
+      description: "Creating a 3 stage Ring Oscillator with self designed inverter, and to analyse different aspects of it",
+      techStack: ["SKY130", "Xschem", "Ngspice", "Magic", "Netgen"],
+      github: "https://github.com/Krishanu-007/ring_oscillator_sky130.git",
+      category: "Analog & Mixed-Signal Design",
+      status: "In Progress"
+    },
     {
       title: "Design and Analysis of CMOS Inverter (sky130)",
       description: "Implemented a CMOS inverter using an open-source sky130PDK, focusing on transient, DC, and switching characteristics for performance evaluation. Finally designing the Layout for the same",
