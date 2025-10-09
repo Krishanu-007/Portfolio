@@ -74,7 +74,7 @@ export const Contact = () => {
       icon: Linkedin,
       label: "LinkedIn",
       value: "k-bandyopadhyay",
-      href: "https:www.linkedin.com/in/k-bandyopadhyay"
+      href: "https://www.linkedin.com/in/k-bandyopadhyay"
     },
     {
       icon: Github,
