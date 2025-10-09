@@ -22,7 +22,7 @@ export const Projects = () => {
       techStack: ["SKY130", "Xschem", "Ngspice", "Magic", "Netgen"],
       github: "https://github.com/Krishanu-007/ring_oscillator_sky130.git",
       category: "Analog & Mixed-Signal Design",
-      status: "In Progress"
+      status: "Completed"
     },
     {
       title: "Design and Analysis of CMOS Inverter (sky130)",
