@@ -59,8 +59,8 @@ export const Publications = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl font-bold text-gradient mb-4">
-            Publications & Research
+          <h2 className="text-4xl md:text-5xl font-bold font-poppins mb-6">
+            Publications & <span className="text-gradient">Research</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Academic contributions to renewable energy and photovoltaic device
@@ -93,9 +93,8 @@ export const Publications = () => {
                       </Badge>
                     </div>
                     <Badge
-                      className={`${
-                        statusColors[pub.status as keyof typeof statusColors]
-                      } border-0`}
+                      className={`${statusColors[pub.status as keyof typeof statusColors]
+                        } border-0`}
                     >
                       {pub.status}
                     </Badge>

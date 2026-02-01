@@ -61,8 +61,8 @@ export const Certifications = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl font-bold text-gradient mb-4">
-            Certifications & Professional Development
+          <h2 className="text-4xl md:text-5xl font-bold font-poppins mb-6">
+            Professional <span className="text-gradient">Certifications</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             Continuous learning and professional certifications to stay at the forefront of VLSI and embedded systems technology.

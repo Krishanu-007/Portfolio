@@ -18,7 +18,7 @@ export const Skills = () => {
     {
       icon: Waves,
       title: "Analog & RF Design",
-      description: "Mixed-signal and RF circuit design expertise", 
+      description: "Mixed-signal and RF circuit design expertise",
       skills: [
         { name: "Circuit Analysis", description: "Analog circuit modeling and simulation" },
         { name: "Microwave Filters", description: "RF filter design and optimization" },
@@ -79,7 +79,7 @@ export const Skills = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2
+        staggerChildren: 0.1
       }
     }
   };
@@ -94,50 +94,48 @@ export const Skills = () => {
   };
 
   return (
-    <section id="skills" className="min-h-screen py-20">
-      <div className="container mx-auto px-8">
+    <section id="skills" className="min-h-screen py-24 relative overflow-hidden">
+      {/* Background Decorative Elements */}
+      <div className="absolute inset-x-0 top-40 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+      <div className="absolute inset-x-0 bottom-40 h-px bg-gradient-to-r from-transparent via-accent/20 to-transparent" />
+
+      <div className="container mx-auto px-4 md:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
-          <h2 className="text-4xl md:text-5xl font-bold font-poppins mb-4">
-            Technical <span className="text-gradient">Skills</span>
+          <h2 className="text-4xl md:text-5xl font-bold font-poppins mb-6">
+            Technical <span className="text-gradient">Arsenal</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Expertise across the complete semiconductor design spectrum
+            Expertise across the complete semiconductor design spectrum, from architecture to silicon.
           </p>
         </motion.div>
 
-        {/* Core Technologies */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          viewport={{ once: true }}
-          className="mb-16"
-        >
-          <h3 className="text-2xl font-semibold text-center mb-8">Core Technologies</h3>
-          <div className="flex flex-wrap justify-center gap-4">
+        {/* Floating Core Technologies */}
+        <div className="mb-24 relative">
+          <h3 className="text-sm font-semibold text-center mb-10 text-muted-foreground uppercase tracking-widest">Core Technologies</h3>
+          <div className="flex flex-wrap justify-center gap-x-4 gap-y-8 max-w-5xl mx-auto">
             {[
-              "Verilog","System Verilog", "RISC-V", "OpenROAD", "OpenLane","sky130","gf180mcu", "Magic", "Ngspice","Xschem","Klayout","Netgen", "iCE40", "Alchitry", "Git", "FPGA","Keysight ADS","Yosys","Arachne-pnr","C", "C++", "TCL", "Python"
+              "Verilog", "SystemVerilog", "RISC-V", "OpenROAD", "OpenLane", "sky130", "gf180mcu", "Magic", "Ngspice", "Xschem", "Klayout", "Netgen", "iCE40", "Alchitry", "Git", "FPGA", "Keysight ADS", "Yosys", "Arachne-pnr", "C/C++", "TCL", "Python"
             ].map((tech, index) => (
               <motion.div
                 key={tech}
-                initial={{ opacity: 0, scale: 0 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.3, delay: index * 0.05 }}
-                viewport={{ once: true }}
-                whileHover={{ scale: 1.1 }}
-                className="glass-card px-6 py-3 rounded-full text-sm font-medium hover-card border border-border hover:border-primary/30 transition-colors"
+                whileHover={{
+                  scale: 1.1,
+                  boxShadow: "0 0 20px var(--primary-glow)",
+                  borderColor: "hsl(var(--primary))"
+                }}
+                className="px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 cursor-default bg-gradient-to-br from-primary/10 to-accent/10 backdrop-blur-md border border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.1)] text-foreground/90 hover:from-primary/20 hover:to-accent/20"
               >
                 {tech}
               </motion.div>
             ))}
           </div>
-        </motion.div>
+        </div>
 
         <motion.div
           variants={containerVariants}
@@ -152,43 +150,45 @@ export const Skills = () => {
               <motion.div
                 key={index}
                 variants={itemVariants}
-                className="glass-card rounded-2xl overflow-hidden hover-card glow-card group"
+                whileHover={{ y: -5 }}
+                className="glass-card rounded-2xl overflow-hidden hover-card glow-card group border border-white/5"
               >
                 {/* Skill Category Header */}
-                <div className="relative h-32 bg-gradient-primary/10 flex items-center justify-center">
+                <div className="relative h-28 bg-gradient-to-br from-surface-elevated to-surface flex items-center justify-center overflow-hidden">
+                  <div className="absolute inset-0 bg-grid opacity-20" />
                   <motion.div
-                    whileHover={{ scale: 1.1 }}
-                    className="w-16 h-16 bg-gradient-primary rounded-xl flex items-center justify-center"
+                    whileHover={{ rotate: 360, scale: 1.2 }}
+                    transition={{ duration: 0.6 }}
+                    className="w-14 h-14 bg-surface rounded-xl flex items-center justify-center shadow-lg border border-white/10 z-10"
                   >
-                    <Icon className="w-8 h-8 text-primary-foreground" />
+                    <Icon className="w-7 h-7 text-primary" />
                   </motion.div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-surface/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+                  {/* Decorative backglow */}
+                  <div className="absolute w-32 h-32 bg-primary/20 blur-3xl rounded-full -top-10 -right-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
-                
+
                 {/* Skill Category Content */}
                 <div className="p-6">
-                  <h3 className="text-xl font-semibold text-foreground mb-2">{category.title}</h3>
-                  <p className="text-muted-foreground mb-4 text-sm">{category.description}</p>
-                  
+                  <h3 className="text-lg font-bold text-foreground mb-2 flex items-center">
+                    {category.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground mb-6 h-10 line-clamp-2">{category.description}</p>
+
                   <div className="space-y-3">
                     {category.skills.map((skill, skillIndex) => (
-                      <motion.div
+                      <div
                         key={skillIndex}
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.4, delay: 0.6 + skillIndex * 0.1 }}
-                        viewport={{ once: true }}
-                        className="flex items-center p-3 bg-surface-elevated rounded-lg hover:bg-primary/10 transition-colors group"
+                        className="flex items-start p-2 rounded-lg hover:bg-white/5 transition-colors group/skill"
                       >
-                        <div className="flex-1">
-                          <div className="font-medium text-foreground group-hover:text-primary transition-colors">
+                        <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-primary/50 group-hover/skill:bg-primary transition-colors mr-3 flex-shrink-0" />
+                        <div>
+                          <div className="text-sm font-medium text-foreground/90 group-hover/skill:text-primary transition-colors">
                             {skill.name}
                           </div>
-                          <div className="text-xs text-muted-foreground">
-                            {skill.description}
-                          </div>
+
                         </div>
-                      </motion.div>
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -200,4 +200,3 @@ export const Skills = () => {
     </section>
   );
 };
-
