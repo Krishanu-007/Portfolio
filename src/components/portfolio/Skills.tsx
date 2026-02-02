@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion';
 import { Cpu, Waves, CircuitBoard, Layers, GitBranch, Code } from 'lucide-react';
+import { staggerContainer, staggerItem } from '@/utils/animations';
+import { CircuitBackground } from '../ui/CircuitBackground';
 
 export const Skills = () => {
   const skillCategories = [
@@ -74,27 +76,10 @@ export const Skills = () => {
     }
   ];
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5 }
-    }
-  };
 
   return (
     <section id="skills" className="min-h-screen py-24 relative overflow-hidden">
+      <CircuitBackground />
       {/* Background Decorative Elements */}
       <div className="absolute inset-x-0 top-40 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
       <div className="absolute inset-x-0 bottom-40 h-px bg-gradient-to-r from-transparent via-accent/20 to-transparent" />
@@ -138,10 +123,9 @@ export const Skills = () => {
         </div>
 
         <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
+          variants={staggerContainer}
+          initial="initial"
+          animate="animate"
           className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
           {skillCategories.map((category, index) => {
@@ -149,7 +133,7 @@ export const Skills = () => {
             return (
               <motion.div
                 key={index}
-                variants={itemVariants}
+                variants={staggerItem}
                 whileHover={{ y: -5 }}
                 className="glass-card rounded-2xl overflow-hidden hover-card glow-card group border border-white/5"
               >

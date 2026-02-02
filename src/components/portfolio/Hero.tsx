@@ -1,6 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
-import { motion, useScroll, useTransform, useSpring, useMotionValue, useMotionTemplate } from 'framer-motion';
-import { ArrowDown, Sparkles, Cpu, Zap, CircuitBoard, Download, ExternalLink } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { CircuitBackground } from '../ui/CircuitBackground';
+import { motion, useScroll, useTransform, useSpring, useMotionValue, useMotionTemplate, Easing } from 'framer-motion';
+import { Sparkles, Cpu, Zap, CircuitBoard, Download, ExternalLink } from 'lucide-react';
+import { TRANSITION_EASE } from '@/utils/animations';
 
 export const Hero = () => {
   const { scrollY } = useScroll();
@@ -13,46 +16,66 @@ export const Hero = () => {
       opacity: 1,
       scale: 1,
       filter: "blur(0px)",
-      transition: { duration: 0.6, ease: "easeOut" }
+      transition: { duration: 0.6, ease: TRANSITION_EASE }
     }
   };
 
   const nameVariants = {
+    hidden: { opacity: 0, y: 24 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: TRANSITION_EASE,
+        staggerChildren: 0.08,
+      }
+    }
+  };
+
+  const subtitleVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.08,
-        delayChildren: 0.2
-      }
+      transition: { duration: 0.6, ease: TRANSITION_EASE, delay: 0.6 }
+    }
+  };
+
+  const ctaVariants = {
+    hidden: { opacity: 0, scale: 0.96 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 0.4, ease: TRANSITION_EASE, delay: 0.8 }
     }
   };
 
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center justify-center relative overflow-hidden bg-grid"
+      className="min-h-screen flex items-center justify-center relative overflow-hidden bg-background"
     >
       {/* Dynamic Background Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <CircuitBackground />
 
-        {/* Animated Gradient Orbs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Animated Gradient Orbs - kept for ambient glow */}
         <motion.div
           animate={{
             scale: [1, 1.2, 1],
-            opacity: [0.3, 0.5, 0.3],
+            opacity: [0.1, 0.2, 0.1],
           }}
           transition={{
             duration: 8,
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/20 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"
+          className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"
         />
         <motion.div
           animate={{
             scale: [1, 1.1, 1],
-            opacity: [0.2, 0.4, 0.2],
+            opacity: [0.1, 0.15, 0.1],
           }}
           transition={{
             duration: 10,
@@ -60,31 +83,8 @@ export const Hero = () => {
             ease: "easeInOut",
             delay: 1,
           }}
-          className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-accent/10 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/3"
+          className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/3"
         />
-
-        {/* Circuit Lines Animation */}
-        <svg className="absolute inset-0 w-full h-full opacity-20">
-          <pattern
-            id="circuit-pattern"
-            x="0"
-            y="0"
-            width="100"
-            height="100"
-            patternUnits="userSpaceOnUse"
-          >
-            <path
-              d="M10 10 L90 10 M90 10 L90 90 M90 90 L10 90 M10 90 L10 10"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="0.5"
-              className="text-primary"
-            />
-            <circle cx="10" cy="10" r="1.5" className="fill-primary" />
-            <circle cx="90" cy="90" r="1.5" className="fill-accent" />
-          </pattern>
-          <rect width="100%" height="100%" fill="url(#circuit-pattern)" />
-        </svg>
       </div>
 
       {/* Main Content */}
@@ -120,9 +120,9 @@ export const Hero = () => {
 
           {/* Role & Description */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.6 }}
+            initial="hidden"
+            animate="visible"
+            variants={subtitleVariants}
             className="space-y-4 max-w-2xl"
           >
             <h2 className="text-xl sm:text-2xl md:text-3xl font-medium text-muted-foreground flex items-center justify-center gap-3">
@@ -140,21 +140,22 @@ export const Hero = () => {
 
           {/* Magnetic Buttons */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1, duration: 0.6 }}
+            initial="hidden"
+            animate="visible"
+            variants={ctaVariants}
             className="flex flex-col sm:flex-row items-center gap-4 pt-8"
           >
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-              className="btn-primary group"
-            >
-              <Zap className="w-5 h-5 mr-2 fill-current" />
-              View My Work
-              <div className="absolute inset-0 rounded-lg ring-2 ring-white/20 group-hover:ring-white/40 transition-all opacity-0 group-hover:opacity-100" />
-            </motion.button>
+            <Link to="/projects">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="btn-primary group"
+              >
+                <Zap className="w-5 h-5 mr-2 fill-current" />
+                View My Work
+                <div className="absolute inset-0 rounded-lg ring-2 ring-white/20 group-hover:ring-white/40 transition-all opacity-0 group-hover:opacity-100" />
+              </motion.button>
+            </Link>
 
             <motion.a
               href="https://drive.google.com/file/d/1AZQRfGIEOEfQnuFc0G301Fs9pJlzrZRS/view?usp=drive_link"
@@ -179,22 +180,6 @@ export const Hero = () => {
         <Cpu size={80} className="text-accent -rotate-12" />
       </motion.div>
 
-      {/* Scroll Indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 1 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
-      >
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          className="flex flex-col items-center space-y-2 text-muted-foreground/50"
-        >
-          <span className="text-xs uppercase tracking-widest">Scroll</span>
-          <ArrowDown className="w-5 h-5 text-primary" />
-        </motion.div>
-      </motion.div>
     </section>
   );
 };

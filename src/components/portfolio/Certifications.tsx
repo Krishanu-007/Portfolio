@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Award, Calendar, ExternalLink } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { CircuitBackground } from "../ui/CircuitBackground";
 
 const certifications = [
   {
@@ -52,7 +53,8 @@ const certifications = [
 
 export const Certifications = () => {
   return (
-    <section id="certifications" className="py-20 px-6">
+    <section id="certifications" className="py-20 px-6 relative overflow-hidden">
+      <CircuitBackground />
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -78,7 +80,7 @@ export const Certifications = () => {
               transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
             >
-              <Card className="glass-morphism hover-card group h-full">
+              <Card className="glass-card hover-card glow-card group rounded-2xl h-full border border-white/5">
                 <CardHeader className="pb-4">
                   <div className="flex items-start justify-between mb-3">
                     <div className="p-3 rounded-lg bg-surface-elevated border border-border group-hover:border-primary/30 transition-colors">

@@ -1,8 +1,10 @@
 import { motion } from 'framer-motion';
 import { Mail, Send, User, MessageSquare, Github, Linkedin } from 'lucide-react';
 import { useState } from 'react';
+import { staggerContainer, staggerItem } from '@/utils/animations';
 import emailjs from '@emailjs/browser';
 import { useToast } from "@/hooks/use-toast";
+import { CircuitBackground } from '../ui/CircuitBackground';
 
 export const Contact = () => {
   const { toast } = useToast();
@@ -34,7 +36,7 @@ export const Contact = () => {
         to_name: 'Portfolio Owner',
       };
 
-       await emailjs.send(
+      await emailjs.send(
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
         import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
         templateParams,
@@ -85,13 +87,13 @@ export const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="min-h-screen py-12 sm:py-16 lg:py-20">
+    <section id="contact" className="min-h-screen py-12 sm:py-16 lg:py-20 relative">
+      <CircuitBackground />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
           className="text-center mb-16"
         >
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-poppins mb-4">
@@ -105,20 +107,19 @@ export const Contact = () => {
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 max-w-6xl mx-auto">
           {/* Contact Information */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
+            variants={staggerContainer}
+            initial="initial"
+            animate="animate"
             className="space-y-8"
           >
-            <div>
+            <motion.div variants={staggerItem}>
               <h3 className="text-2xl font-semibold mb-6">Let's Connect</h3>
               <p className="text-muted-foreground leading-relaxed mb-8">
-                I'm always interested in discussing new opportunities, innovative projects, 
-                and collaborations in the field of VLSI design and embedded systems. 
+                I'm always interested in discussing new opportunities, innovative projects,
+                and collaborations in the field of VLSI design and embedded systems.
                 Whether you have a project in mind or just want to connect, I'd love to hear from you.
               </p>
-            </div>
+            </motion.div>
 
             <div className="space-y-4">
               {contactInfo.map((info, index) => {
@@ -129,10 +130,7 @@ export const Contact = () => {
                     href={info.href}
                     target={info.href.startsWith('http') ? '_blank' : '_self'}
                     rel={info.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.4, delay: 0.2 + index * 0.1 }}
-                    viewport={{ once: true }}
+                    variants={staggerItem}
                     whileHover={{ x: 10 }}
                     className="flex items-center space-x-4 glass-card p-4 rounded-xl hover-card glow-card group"
                   >
@@ -152,9 +150,8 @@ export const Contact = () => {
           {/* Contact Form */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }}
             className="glass-card p-8 rounded-2xl"
           >
             <h3 className="text-2xl font-semibold mb-6 flex items-center space-x-2">
@@ -162,13 +159,16 @@ export const Contact = () => {
               <span>Send a Message</span>
             </h3>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <motion.form
+              onSubmit={handleSubmit}
+              className="space-y-6"
+              variants={staggerContainer}
+              initial="initial"
+              animate="animate"
+            >
               <div className="grid sm:grid-cols-2 gap-4">
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.4 }}
-                  viewport={{ once: true }}
+                  variants={staggerItem}
                 >
                   <label className="block text-sm font-medium text-foreground mb-2">
                     Name
@@ -187,12 +187,7 @@ export const Contact = () => {
                   </div>
                 </motion.div>
 
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.5 }}
-                  viewport={{ once: true }}
-                >
+                <motion.div variants={staggerItem}>
                   <label className="block text-sm font-medium text-foreground mb-2">
                     Email
                   </label>
@@ -211,12 +206,7 @@ export const Contact = () => {
                 </motion.div>
               </div>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.6 }}
-                viewport={{ once: true }}
-              >
+              <motion.div variants={staggerItem}>
                 <label className="block text-sm font-medium text-foreground mb-2">
                   Subject
                 </label>
@@ -231,12 +221,7 @@ export const Contact = () => {
                 />
               </motion.div>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.7 }}
-                viewport={{ once: true }}
-              >
+              <motion.div variants={staggerItem}>
                 <label className="block text-sm font-medium text-foreground mb-2">
                   Message
                 </label>
@@ -254,10 +239,7 @@ export const Contact = () => {
               <motion.button
                 type="submit"
                 disabled={isSubmitting}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.8 }}
-                viewport={{ once: true }}
+                variants={staggerItem}
                 whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
                 whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
                 className="w-full btn-glow py-4 rounded-lg font-semibold text-primary-foreground flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
@@ -265,11 +247,10 @@ export const Contact = () => {
                 <Send className={`w-5 h-5 ${isSubmitting ? 'animate-pulse' : ''}`} />
                 <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
               </motion.button>
-            </form>
+            </motion.form>
           </motion.div>
         </div>
       </div>
     </section>
   );
 };
-

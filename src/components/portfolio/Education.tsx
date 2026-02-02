@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion';
 import { GraduationCap, Calendar, MapPin, Award, BookOpen, School, Zap } from 'lucide-react';
+import { staggerContainer, staggerItem } from '@/utils/animations';
+import { CircuitBackground } from '../ui/CircuitBackground';
 
 export const Education = () => {
   const educationList = [
@@ -52,12 +54,12 @@ export const Education = () => {
 
   return (
     <section id="education" className="min-h-screen py-24 relative overflow-hidden">
+      <CircuitBackground />
       <div className="container mx-auto px-4 md:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
           className="text-center mb-20"
         >
           <h2 className="text-4xl md:text-5xl font-bold font-poppins mb-6">
@@ -70,28 +72,40 @@ export const Education = () => {
 
         <div className="max-w-4xl mx-auto relative">
           {/* Circuit Line (Vertical) */}
-          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-primary/50 via-accent/50 to-transparent rounded-full transform -translate-x-1/2">
+          <motion.div
+            initial={{ height: 0 }}
+            animate={{ height: "100%" }}
+            transition={{ duration: 1.5, ease: "easeInOut" }}
+            className="absolute left-4 md:left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-primary/50 via-accent/50 to-transparent rounded-full transform -translate-x-1/2 origin-top"
+          >
             <div className="absolute top-0 left-0 w-full h-full bg-primary/20 blur-sm" />
-          </div>
+          </motion.div>
 
-          <div className="space-y-16">
+          <motion.div
+            className="space-y-16"
+            variants={staggerContainer}
+            initial="initial"
+            animate="animate"
+          >
             {educationList.map((edu, index) => {
               const Icon = edu.icon;
               return (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                  viewport={{ once: true }}
+                  variants={staggerItem}
                   className={`relative flex flex-col md:flex-row gap-8 ${index % 2 === 0 ? 'md:flex-row-reverse' : ''
                     }`}
                 >
                   {/* Timeline Node (Center) */}
                   <div className="absolute left-4 md:left-1/2 top-0 transform -translate-x-1/2 flex items-center justify-center z-10">
-                    <div className="w-8 h-8 bg-surface border-4 border-primary rounded-full shadow-[0_0_20px_rgba(59,130,246,0.5)] z-20 flex items-center justify-center">
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ delay: 0.5 + index * 0.2, type: "spring" }}
+                      className="w-8 h-8 bg-surface border-4 border-primary rounded-full shadow-[0_0_20px_rgba(59,130,246,0.5)] z-20 flex items-center justify-center"
+                    >
                       <div className="w-2 h-2 bg-white rounded-full animate-pulse" />
-                    </div>
+                    </motion.div>
                   </div>
 
                   {/* Spacer Side */}
@@ -160,7 +174,7 @@ export const Education = () => {
                 </motion.div>
               );
             })}
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

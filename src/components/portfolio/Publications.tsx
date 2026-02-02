@@ -3,6 +3,7 @@ import { BookOpen, Calendar, ExternalLink, Users } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { CircuitBackground } from "../ui/CircuitBackground";
 
 const publications = [
   {
@@ -50,7 +51,8 @@ const typeColors = {
 
 export const Publications = () => {
   return (
-    <section id="publications" className="py-20 px-6">
+    <section id="publications" className="py-20 px-6 relative overflow-hidden">
+      <CircuitBackground />
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -77,7 +79,7 @@ export const Publications = () => {
               transition={{ duration: 0.6, delay: index * 0.1 }}
               viewport={{ once: true }}
             >
-              <Card className="glass-morphism hover-card group">
+              <Card className="glass-card hover-card glow-card group rounded-2xl border border-white/5">
                 <CardHeader className="pb-4">
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex items-center gap-3">

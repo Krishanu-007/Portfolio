@@ -1,9 +1,26 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FolderOpen, Github, ArrowUpRight, Lock, Code2, Cpu, Radio, Layers, Activity, Zap, Box, BarChart3 } from 'lucide-react';
+import { staggerContainer, staggerItem } from '@/utils/animations';
+import { CircuitBackground } from '../ui/CircuitBackground';
+import { ProjectModal } from '../ui/ProjectModal';
+
+interface ProjectDetail {
+  title: string;
+  description: string;
+  detailedPoints: string[];
+  techStack: string[];
+  github?: string;
+  category: string;
+  status: string;
+  type: string;
+  imagePath: string;
+}
 
 export const Projects = () => {
   const [activeCategory, setActiveCategory] = useState('All');
+  const [selectedProject, setSelectedProject] = useState<ProjectDetail | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const categories = [
     "All",
@@ -24,57 +41,107 @@ export const Projects = () => {
     "RTL Designs": "Efficient Register Transfer Level coding for digital logic and system blocks."
   };
 
-  const projects = [
+  const projects: ProjectDetail[] = [
     {
-      title: "Ring Oscillator Design",
-      description: "Designed a 3-stage Ring Oscillator using SKY130 PDK. Analyzed frequency stability, phase noise, and power consumption across different process corners.",
-      techStack: ["SKY130", "Xschem", "Ngspice", "Magic"],
-      github: "https://github.com/Krishanu-007/ring_oscillator_sky130.git",
-      category: "Analog & Mixed-Signal Design",
-      status: "Completed",
-      type: "analog"
-    },
-    {
-      title: "CMOS Inverter Analysis",
-      description: "Implemented and characterized a CMOS inverter with SKY130. Focused on noise margins, propagation delay, and layout optimization for high density.",
-      techStack: ["SKY130", "Magic Layout", "Netgen", "Ngspice"],
-      github: "https://github.com/Krishanu-007/cmos_inverter_sky130.git",
-      category: "Analog & Mixed-Signal Design",
-      status: "Completed",
-      type: "analog"
-    },
-    {
-      title: "Transistor Cha. Extraction",
-      description: "Automated extraction of NMOS/PMOS I-V curves and threshold voltages using Python scripts and Ngspice simulations on SKY130 models.",
-      techStack: ["Python", "Ngspice", "Semiconductor Physics"],
+      title: "Transistor Modeling using SKY130 PDK",
+      description: "Comprehensive characterization and modeling of NMOS/PMOS transistors using the SKY130 open-source PDK.",
+      detailedPoints: [
+        "Simulated 1.8 V NMOS/PMOS transistors in SKY130 using Xschem and Ngspice",
+        "Extracted key parameters: Vth, Ids, gm, and rds from IV sweeps",
+        "NMOS threshold voltage: 646 mV, PMOS threshold voltage: 544 mV",
+        "Performed DC, AC, and transient analysis for device characterization"
+      ],
+      techStack: ["SKY130", "Xschem", "Ngspice", "Semiconductor Physics"],
       github: "https://github.com/Krishanu-007/transistor_analysis_sky130.git",
       category: "Analog & Mixed-Signal Design",
       status: "Completed",
-      type: "analysis"
+      type: "analysis",
+      imagePath: "/projects/transistor-modeling.png"
     },
     {
-      title: "Microstrip Filter (3.8GHz)",
-      description: "Designed a compact UWB Bandpass Filter for 5G applications. Optimized S-parameters using ADS Momentum and fabricated on FR4 substrate.",
-      techStack: ["ADS", "Momentum", "RF Design"],
+      title: "CMOS Inverter Design and Characterization",
+      description: "Complete design flow of a CMOS inverter from schematic to layout using SKY130 PDK with comprehensive performance analysis.",
+      detailedPoints: [
+        "Designed and verified CMOS inverter using Xschem, Ngspice, and Magic",
+        "Achieved DRC/LVS-clean layout with proper design rule compliance",
+        "Observed 2.5× delay increase (37.5→95.7 ps) post-layout due to parasitics",
+        "Power reduction from 17 µW to 4.96 µW after layout optimization",
+        "Analyzed noise margins, propagation delay, and power-delay product"
+      ],
+      techStack: ["SKY130", "Xschem", "Ngspice", "Magic", "Netgen"],
+      github: "https://github.com/Krishanu-007/cmos_inverter_sky130.git",
+      category: "Analog & Mixed-Signal Design",
+      status: "Completed",
+      type: "analog",
+      imagePath: "/projects/cmos-inverter.png"
+    },
+    {
+      title: "3-Stage CMOS Ring Oscillator",
+      description: "Design and implementation of a 3-stage ring oscillator in SKY130 with complete parasitic extraction and verification.",
+      detailedPoints: [
+        "Designed 3-stage ring oscillator in SKY130 (1.8 V) using Xschem, Ngspice, and Magic",
+        "Complete DRC/LVS/PEX verification workflow",
+        "Observed frequency drop from 7.06 GHz to 6.68 GHz due to parasitic loading",
+        "Power consumption approximately 482 µW",
+        "Analyzed phase noise and jitter characteristics"
+      ],
+      techStack: ["SKY130", "Xschem", "Ngspice", "Magic", "Netgen"],
+      github: "https://github.com/Krishanu-007/ring_oscillator_sky130.git",
+      category: "Analog & Mixed-Signal Design",
+      status: "Completed",
+      type: "analog",
+      imagePath: "/projects/ring-oscillator.png"
+    },
+    {
+      title: "Compact UWB Microstrip Bandpass Filter",
+      description: "Ultra-wideband bandpass filter design for C and S-band satellite communication systems at ISRO.",
+      detailedPoints: [
+        "Designed compact ultra-wideband microstrip bandpass filter for C and S-band applications",
+        "Optimized filter design with Chebyshev response and open-stub topology",
+        "Achieved ~1.75 dB insertion loss and >17 dB return loss",
+        "Harmonic suppression >25 dBc within strict 1×1 inch layout constraints",
+        "Center frequency: 3.825 GHz with 62.7% fractional bandwidth",
+        "Simulated using Keysight ADS with Momentum EM analysis"
+      ],
+      techStack: ["Keysight ADS", "Momentum", "Microstrip Design", "RF Design"],
       github: "https://github.com/Krishanu-007/compact-uwb-bpf-3.825GHz.git",
       category: "RF & Microwave Design",
       status: "Completed",
-      type: "rf"
+      type: "rf",
+      imagePath: "/projects/microstrip-filter.png"
     },
     {
-      title: "Anti-Collision System",
-      description: "IoT-based vehicle safety system using ESP32 and A9G GSM/GPS module. Implemented real-time tracking and collision alerts via MQTT.",
-      techStack: ["ESP32", "C++", "MQTT", "AWS IoT"],
+      title: "GPS-Based Anti-Collision System",
+      description: "Real-time vehicle tracking and collision prevention system using ESP32 and GPS technology.",
+      detailedPoints: [
+        "Built real-time vehicle tracking system using ESP32 and A9G GSM/GPRS modules",
+        "Achieved 7 m GPS accuracy with 10 s refresh rate",
+        "Implemented decentralized database system for data storage",
+        "Real-time collision alerts and vehicle-to-vehicle communication",
+        "Low-power design for extended battery operation"
+      ],
+      techStack: ["ESP32", "A9G GSM/GPS", "C++", "IoT", "Embedded Systems"],
       github: "https://github.com/Krishanu-007/Final-Year-Project-2k25.git",
       category: "Embedded & IoT Systems",
       status: "Completed",
-      type: "embedded"
+      type: "embedded",
+      imagePath: "/projects/anti-collision.png"
     }
   ];
 
   const filteredProjects = projects.filter(
     (project) => activeCategory === 'All' || project.category === activeCategory
   );
+
+  const handleProjectClick = (project: ProjectDetail) => {
+    setSelectedProject(project);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setTimeout(() => setSelectedProject(null), 300);
+  };
 
   // Helper to render abstract visual based on type
   const renderProjectVisual = (type: string) => {
@@ -132,12 +199,12 @@ export const Projects = () => {
 
   return (
     <section id="projects" className="min-h-screen py-24 relative overflow-hidden">
+      <CircuitBackground />
       <div className="container mx-auto px-4 md:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold font-poppins mb-6">
@@ -197,24 +264,44 @@ export const Projects = () => {
               <p className="text-muted-foreground">Projects for this category are currently being documented.</p>
             </motion.div>
           ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <motion.div
+              className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+              variants={staggerContainer}
+              initial="initial"
+              animate="animate"
+            >
               {filteredProjects.map((project, index) => (
                 <motion.div
                   layout
                   key={project.title}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.4, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="group relative bg-surface border border-white/5 rounded-2xl overflow-hidden hover:border-primary/30 transition-colors"
+                  variants={staggerItem}
+                  whileHover={{ y: -6 }}
+                  onClick={() => handleProjectClick(project)}
+                  className="group relative bg-surface border border-white/5 rounded-2xl overflow-hidden hover:border-primary/30 transition-colors cursor-pointer"
                 >
                   {/* Visual Header */}
                   <div className="h-48 relative bg-surface-elevated overflow-hidden">
-                    {renderProjectVisual(project.type)}
+                    <motion.div
+                      className="absolute inset-0 z-0"
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ duration: 0.4 }}
+                    >
+                      {renderProjectVisual(project.type)}
+                    </motion.div>
                     <div className="absolute inset-0 bg-gradient-to-t from-surface to-transparent" />
-                    <div className="absolute bottom-4 left-4">
+                    <motion.div
+                      className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    />
+                    <div className="absolute bottom-4 left-4 z-10">
                       <div className="p-2 bg-surface/50 backdrop-blur-md rounded-lg border border-white/10">
                         {getProjectIcon(project.type)}
+                      </div>
+                    </div>
+                    {/* Click to view indicator */}
+                    <div className="absolute top-4 right-4 z-10 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="px-3 py-1 bg-primary/90 backdrop-blur-sm rounded-full text-xs font-semibold text-primary-foreground flex items-center gap-1">
+                        <ArrowUpRight className="w-3 h-3" />
+                        View Details
                       </div>
                     </div>
                   </div>
@@ -229,6 +316,7 @@ export const Projects = () => {
                         href={project.github}
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
                         className="text-muted-foreground hover:text-foreground transition-colors"
                       >
                         <Github className="w-5 h-5" />
@@ -240,21 +328,32 @@ export const Projects = () => {
                     </p>
 
                     <div className="flex flex-wrap gap-2 mt-auto">
-                      {project.techStack.map(tech => (
+                      {project.techStack.slice(0, 4).map(tech => (
                         <span key={tech} className="px-2 py-1 text-[10px] font-mono bg-white/5 rounded border border-white/5 text-muted-foreground">
                           {tech}
                         </span>
                       ))}
+                      {project.techStack.length > 4 && (
+                        <span className="px-2 py-1 text-[10px] font-mono bg-white/5 rounded border border-white/5 text-muted-foreground">
+                          +{project.techStack.length - 4} more
+                        </span>
+                      )}
                     </div>
                   </div>
                 </motion.div>
               ))}
-            </div>
+            </motion.div>
           )}
         </AnimatePresence>
 
       </div>
+
+      {/* Project Modal */}
+      <ProjectModal
+        project={selectedProject}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+      />
     </section>
   );
 };
-

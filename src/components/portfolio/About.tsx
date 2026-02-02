@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion';
 import { Cpu, Zap, Target } from 'lucide-react';
+import { staggerContainer, staggerItem } from '@/utils/animations';
+import { CircuitBackground } from '../ui/CircuitBackground';
 
 export const About = () => {
   const highlights = [
@@ -23,15 +25,18 @@ export const About = () => {
   return (
     <section
       id="about"
-      className="min-h-screen py-20 overflow-x-hidden"
+      className="min-h-screen py-20 overflow-x-hidden relative"
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <CircuitBackground />
+      <motion.div
+        variants={staggerContainer}
+        initial="initial"
+        animate="animate"
+        className="container mx-auto px-4 sm:px-6 lg:px-8"
+      >
         {/* Section Title */}
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
+          variants={staggerItem}
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold font-poppins mb-4">
@@ -46,10 +51,7 @@ export const About = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Profile Image */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
+            variants={staggerItem}
             className="relative w-full max-w-lg mx-auto"
           >
             <motion.div
@@ -74,10 +76,7 @@ export const About = () => {
 
           {/* Content */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }}
+            variants={staggerItem}
             className="space-y-8"
           >
             <div className="glass-card p-6 sm:p-8 rounded-2xl">
@@ -97,10 +96,7 @@ export const About = () => {
                 return (
                   <motion.div
                     key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: 0.4 + index * 0.1 }}
-                    viewport={{ once: true }}
+                    variants={staggerItem}
                     className="glass-card p-6 rounded-xl hover-card glow-card"
                   >
                     <div className="flex items-center space-x-4">
@@ -118,8 +114,7 @@ export const About = () => {
             </div>
           </motion.div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };
-
